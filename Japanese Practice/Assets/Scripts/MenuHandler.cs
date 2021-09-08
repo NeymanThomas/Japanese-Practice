@@ -1,4 +1,19 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// This is the main menu class for the Japanese Practice application.
+/// It's primary purpose is to provide the main UI Elements that navigate the user
+/// to different parts of the application. functions implemented include:
+///     -> Directing user to Hiragana Scene
+///     -> Directing user to Katakana Scene
+///     -> Allowing user to see their stats 
+///     -> Allowing user to Delete their stats
+///     -> Allowing user to Delete their scores
+///     -> Quit button to exit the application
+/// </summary>
+
+// TODO add support for the Phrases Scene
+// =======================================
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
@@ -20,8 +35,8 @@ public class MenuHandler : MonoBehaviour
     }
 
     public void LoadPhrases() {
-        SoundManager.instance.Play("Bloop 1");
-        SceneManager.LoadScene("PhrasesMenu");
+        //SoundManager.instance.Play("Bloop 1");
+        //SceneManager.LoadScene("PhrasesMenu");
     }
 
     public void LoadStats() {
@@ -45,7 +60,7 @@ public class MenuHandler : MonoBehaviour
 
     public void DeleteScores() {
         SoundManager.instance.Play("Bloop 3");
-        if (scoresFlag == false) {
+        if (!scoresFlag == false) {
             btnDeleteScores.image.color = new Color32(255, 0, 0, 255);
             btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "ARE YOU SURE?";
             scoresFlag = true;

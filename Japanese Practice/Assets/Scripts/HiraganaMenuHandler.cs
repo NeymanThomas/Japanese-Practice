@@ -1,4 +1,32 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// This class handles all uses of Hiragana practice in the app.
+/// Implemented functions:
+///     -> user practices by seeing hiragana symbols
+///     -> user practices by seeing random hiragana symbols
+///     -> user practices by seeing romanji for hiragana
+///     -> user practices by seeing random romanji for hiragana symbols
+///     -> the user can challenge themselves with a timer to correctly 
+///     guess random hiragana symbols and receive a score
+///     -> the user can go back to the main menu
+/// 
+/// The handler functions by enabling and disabling various Panels in the
+/// scene. the default 'menuPanel' is enabled on Awake of the scene and all
+/// other Panels are disabled. Upon selecting an option for practice, a
+/// corresponding panel will be enabled while the previous panel is disabled.
+/// For example, selecting 'Practice Hiragana' will disable the 'menuPanel'
+/// and enable the 'hiraganaPanel'. This hides the menu from view and only
+/// shows the user the panel for practicing Hiragana.
+/// 
+/// In order to be interacted with, the UI elements must be serialized and
+/// listed inside of the HiraganaMenuHandler Class.
+/// </summary>
+
+// TODO
+// allow the application to interact with a JSON file that contains the
+// list of the alphabet instead of creating the list inside of the class.
+// ======================================================================
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
@@ -23,6 +51,7 @@ public class HiraganaMenuHandler : MonoBehaviour
     [SerializeField] private TMP_Text endText;
     [SerializeField] private GameObject retryButton;
     [SerializeField] private TMP_Text timeLeft;
+
     private List<string> alphabet;
     private string selectedhiragana;
     private int bookmark;
@@ -30,6 +59,7 @@ public class HiraganaMenuHandler : MonoBehaviour
     private float timeAdder;
     private System.Random random;
 
+    // Make sure at Awake that the menuPanel is the only GameObject active
     private void Awake() {
         menuPanel.gameObject.SetActive(true);
         hiraganaPanel.gameObject.SetActive(false);
@@ -37,6 +67,7 @@ public class HiraganaMenuHandler : MonoBehaviour
         challengePanel.gameObject.SetActive(false);
     }
 
+    // Initialize the objects and other values
     private void Start() {
         CreateList();
         random = new System.Random();

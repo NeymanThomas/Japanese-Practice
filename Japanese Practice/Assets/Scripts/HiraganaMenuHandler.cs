@@ -54,7 +54,7 @@ public class HiraganaMenuHandler : MonoBehaviour
 
     private List<string> alphabet;
     private string selectedhiragana;
-    private int bookmark;
+    private int bookmark; // The bookmark refers to the current position in the alphabet
     private float score;
     private float timeAdder;
     private System.Random random;
@@ -159,6 +159,7 @@ public class HiraganaMenuHandler : MonoBehaviour
         selectedhiragana = alphabet[rnd];
     }
 
+    // A simple fucntion that takes the list and shuffles its contents
     private void ShuffleList() {
         int n = alphabet.Count;
         while (n > 1) {
@@ -170,6 +171,11 @@ public class HiraganaMenuHandler : MonoBehaviour
         }
     }
 
+    // This function takes in the pheonetic sound from the alphabet
+    // and associates it with the correct symbol from the list of
+    // Hiragana. The Font Asset being used has mappings that correspond
+    // to the switch statement below. For example, if the selectedhiragana
+    // is "sa", the font is mapped to "a" which corresponds to the symbol for "sa"
     public string RetrieveHiragana() {
         switch (selectedhiragana) {
             case "A":
@@ -314,8 +320,11 @@ public class HiraganaMenuHandler : MonoBehaviour
         }
     }
 
+    // Region for all of the romanji based functions
     #region romanji
 
+    // Function for practicing romanji in alphabetical order
+    // the bookmark is set to 0 as it is the first index in the list
     public void ShowRomanjiMenu() {
         menuPanel.gameObject.SetActive(false);
         romanjiPanel.gameObject.SetActive(true);
@@ -329,6 +338,8 @@ public class HiraganaMenuHandler : MonoBehaviour
         NextRomanji();
     }
 
+    // Function for practicing romanji in random order
+    // the bookmark does not need to be set because the list is randomized
     public void ShowRandomRomanjiMenu() {
         menuPanel.gameObject.SetActive(false);
         romanjiPanel.gameObject.SetActive(true);
@@ -339,6 +350,12 @@ public class HiraganaMenuHandler : MonoBehaviour
         NextRomanji();
     }
 
+    // Method for showing the romanji for what the bookmark is currently 
+    // pointing to. It then increments the bookmark to point to the next
+    // symbol in the list. Each time a new romanji is retrieved, the
+    // showHiraganaText and showHiraganaSecondaryText objects must be
+    // disabled so that if the user revealed what the answer was, the next
+    // answer will not also be revealed.
     public void NextRomanji() {
         SoundManager.instance.Play("Bloop 1");
         showHiraganaText.gameObject.SetActive(false);
@@ -351,6 +368,11 @@ public class HiraganaMenuHandler : MonoBehaviour
         }
     }
 
+    // Method to show the Hiragana of the associated romanji being pointed
+    // to by the bookmark. Because Japanese language has some sounds that
+    // can apply to 2 symbols, we must add a case to check if the text
+    // is displaying one of these symbols. If it is, we must also display
+    // the alternative symbol for the associated sound.
     public void ShowHiragana() {
         SoundManager.instance.Play("Bloop 1");
         showHiraganaText.gameObject.SetActive(true);
@@ -367,8 +389,11 @@ public class HiraganaMenuHandler : MonoBehaviour
 
     #endregion
 
+    // Region for all the Hiragana based functions
     #region hiragana
 
+    // Function for practicing Hiragana in alphabetical order
+    // the bookmark is set to 0 as it is the first index in the list
     public void ShowHiraganaMenu() {
         menuPanel.gameObject.SetActive(false);
         hiraganaPanel.gameObject.SetActive(true);
@@ -382,6 +407,8 @@ public class HiraganaMenuHandler : MonoBehaviour
         NextHiragana();
     }
 
+    // Function for practicing Hiragana in random order
+    // the bookmark does not need to be set because the list is randomized
     public void ShowRandomHiraganaMenu() {
         menuPanel.gameObject.SetActive(false);
         hiraganaPanel.gameObject.SetActive(true);
@@ -392,6 +419,12 @@ public class HiraganaMenuHandler : MonoBehaviour
         NextHiragana();
     }
 
+    // Method for showing the Hiragana for what the bookmark is currently 
+    // pointing to. It then increments the bookmark to point to the next
+    // symbol in the list. Each time a new hiragana is retrieved, the
+    // showRomanjiText and showAltHiragana objects must be
+    // disabled so that if the user revealed what the answer was, the next
+    // answer will not also be revealed.
     public void NextHiragana() {
         SoundManager.instance.Play("Bloop 1");
         showRomanjiText.gameObject.SetActive(false);
@@ -414,6 +447,8 @@ public class HiraganaMenuHandler : MonoBehaviour
         }
     }
 
+    // Method to show the Romanji of the associated Hiragana being pointed
+    // to by the bookmark
     public void ShowRomanji() {
         SoundManager.instance.Play("Bloop 1");
         showRomanjiText.gameObject.SetActive(true);
@@ -422,8 +457,11 @@ public class HiraganaMenuHandler : MonoBehaviour
 
     #endregion
 
+    // Region to handle all of the functions for the challenge mode
     #region challenge
 
+    // Initalizes the panel for the challenge mode. If a high score exists,
+    // display it. 
     public void ShowChallengeMenu() {
         menuPanel.gameObject.SetActive(false);
         challengePanel.gameObject.SetActive(true);
@@ -443,6 +481,20 @@ public class HiraganaMenuHandler : MonoBehaviour
         challengeHiragana.text = RetrieveHiragana();
     }
 
+    // Method that accepts input from the user to process their answer. Light 
+    // sanitation is used to trim unwanted characters and change all characters
+    // to lower case. 
+    //
+    // If the input matches what the bookmark is pointing to, 
+    // the score is incremented, the answer field is whiped, and the focus is
+    // put back into the input field so the user does not have to select it over
+    // and over again. The coroutine for the timer is restarted and a new hiragana
+    // is retrieved.
+    //
+    // Otherwise if the answer is wrong or the timer runs down to 0, the save system
+    // will record which Hiragana failed you as well as your score. If your score is
+    // higher than your last saved high score, it will be overwritten. The method then
+    // shows the user the correct answer and prompts them if they want to play again.
     public void Submit() {
         string input = answer.text;
         input = input.Trim(' ', '*', '!', '@', '#', '$', '%', '^', '&');
@@ -522,6 +574,9 @@ public class HiraganaMenuHandler : MonoBehaviour
         }
     }
 
+    // Simple countdown timer method. Once the timer reaches 0, it will
+    // automatically call the Submit() method, forcing the answer 
+    // validation to occur
     private IEnumerator CountDown() {
         float duration = 10f;
         float timeSpent = 0;

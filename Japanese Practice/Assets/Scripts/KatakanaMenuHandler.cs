@@ -1,4 +1,32 @@
-﻿using System.Collections;
+﻿/// <summary>
+/// This class handles all uses of Katakana practice in the app.
+/// Implemented functions:
+///     -> user practices by seeing Katakana symbols
+///     -> user practices by seeing random Katakana symbols
+///     -> user practices by seeing romanji for Katakana
+///     -> user practices by seeing random romanji for Katakana symbols
+///     -> the user can challenge themselves with a timer to correctly 
+///     guess random Katakana symbols and receive a score
+///     -> the user can go back to the main menu
+/// 
+/// The handler functions by enabling and disabling various Panels in the
+/// scene. the default 'menuPanel' is enabled on Awake of the scene and all
+/// other Panels are disabled. Upon selecting an option for practice, a
+/// corresponding panel will be enabled while the previous panel is disabled.
+/// For example, selecting 'Practice Katakana' will disable the 'menuPanel'
+/// and enable the  KatakanaPanel'. This hides the menu from view and only
+/// shows the user the panel for practicing Katakana.
+/// 
+/// In order to be interacted with, the UI elements must be serialized and
+/// listed inside of the KatakanaMenuHandler Class.
+/// </summary>
+
+// TODO
+// allow the application to interact with a JSON file that contains the
+// list of the alphabet instead of creating the list inside of the class.
+// ======================================================================
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,11 +53,12 @@ public class KatakanaMenuHandler : MonoBehaviour
     [SerializeField] private TMP_Text timeLeft;
     private List<string> alphabet;
     private string selectedKatakana;
-    private int bookmark;
+    private int bookmark; // The bookmark refers to the current position in the alphabet
     private float score;
     private float timeAdder;
     private System.Random random;
 
+    // Make sure at Awake that the menuPanel is the only GameObject active
     private void Awake() {
         menuPanel.gameObject.SetActive(true);
         katakanaPanel.gameObject.SetActive(false);
@@ -37,6 +66,7 @@ public class KatakanaMenuHandler : MonoBehaviour
         challengePanel.gameObject.SetActive(false);
     }
 
+    // Initialize the objects and other values
     private void Start() {
         CreateList();
         random = new System.Random();
@@ -128,6 +158,7 @@ public class KatakanaMenuHandler : MonoBehaviour
         selectedKatakana = alphabet[rnd];
     }
 
+    // A simple fucntion that takes the list and shuffles its contents
     private void ShuffleList() {
         int n = alphabet.Count;
         while (n > 1) {
@@ -139,6 +170,11 @@ public class KatakanaMenuHandler : MonoBehaviour
         }
     }
 
+    // This function takes in the pheonetic sound from the alphabet
+    // and associates it with the correct symbol from the list of
+    // Katakana. The Font Asset being used has mappings that correspond
+    // to the switch statement below. For example, if the selectedKatakana
+    // is "sa", the font is mapped to "a" which corresponds to the symbol for "sa"
     public string RetrieveKatakana() {
         switch (selectedKatakana) {
             case "A":
@@ -283,6 +319,9 @@ public class KatakanaMenuHandler : MonoBehaviour
         }
     }
 
+    // BELOW SECTIONS OF CODE
+    // For documentation on how the methods are being used, refer to the HiraganaMenuHandler
+    // Class as the implement the same methods under different titles.
     #region romanji
 
     public void ShowRomanjiMenu() {

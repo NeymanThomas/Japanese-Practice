@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// The statistcs menu is used to display the list of all saved mistakes made
+/// by the user. This can help them keep track of what needs practice and what 
+/// doesn't.
+/// </summary>
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -11,6 +17,9 @@ public class StatsMenuHandler : MonoBehaviour
     [SerializeField]
     private GameObject hiraganaPanel, katakanaPanel;
     StatisticalData stats;
+
+    // Initialize a StatisticalData Object to recieve the number of mistakes
+    // for every symbol. 
     private void Start() {
         hiraganaPanel.gameObject.SetActive(true);
         katakanaPanel.gameObject.SetActive(false);

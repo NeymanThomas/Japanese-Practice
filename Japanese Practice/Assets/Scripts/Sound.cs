@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Simple Sound Class to store some values and properties we want
+/// our sound clips to contain or have control over.
+/// </summary>
+
+using UnityEngine;
 
 [System.Serializable]
 public class Sound

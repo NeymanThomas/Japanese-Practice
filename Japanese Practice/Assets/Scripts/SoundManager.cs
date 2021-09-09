@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// The SoundManager is a singleton that is loaded at the start of the application
+/// and controls all of the counds that the application uses. The sound manager
+/// is not destroyed upon loading in new scenes to help speed up performance.
+/// </summary>
+
+using UnityEngine;
 using System;
 
 public class SoundManager : MonoBehaviour

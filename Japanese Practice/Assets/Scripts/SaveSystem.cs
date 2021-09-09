@@ -1,4 +1,15 @@
-﻿using System.IO;
+﻿/// <summary>
+/// The static SaveSystem Class implements functions that help store simple
+/// data sets that are tracked by the application. These include
+///     -> High scores for both Hiragana and Katakana Challenges
+///     -> All tallied Hiragana mistakes
+///     -> All Tallied Katakana mistakes
+/// The files of data are stored as .tommy files in Unity's persistent
+/// data path. Because the data being saved is very simple, a binary
+/// serializer is used.
+/// </summary>
+
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System;
@@ -26,6 +37,7 @@ public static class SaveSystem
         return false;
     }
 
+    // Saves a high score from the Hiragana Challenge Mode
     public static void Save_H_Score(float score) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/h_score.tommy";
@@ -35,6 +47,7 @@ public static class SaveSystem
         stream.Close();
     }
 
+    // Saves a high score from the Katakana Challenge Mode
     public static void Save_K_Score(float score) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/k_score.tommy";
@@ -44,6 +57,8 @@ public static class SaveSystem
         stream.Close();
     }
 
+    // accepts the string for the Hiragana that caused you to fail the challenge 
+    // mode and tallies it to your stats.
     public static void Save_Hiragana(string h) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/stats.tommy";
@@ -63,6 +78,8 @@ public static class SaveSystem
         }
     }
 
+    // accepts the string for the Katakana that caused you to fail the challenge 
+    // mode and tallies it to your stats.
     public static void Save_Katakana(string h) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/stats.tommy";

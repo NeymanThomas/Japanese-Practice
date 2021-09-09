@@ -1,4 +1,11 @@
-﻿
+﻿/// <summary>
+/// A simple class that is used to hold the raw data for the application. All mistakes
+/// are saved as an integer for the associated values in the class. Upon class creation
+/// all values are set to 0. The add_H_Stat and add_K_Stat functions then take a specific
+/// input and increment the associated value by 1. The class is then re-serialized by the 
+/// SaveSystem class.
+/// </summary>
+
 [System.Serializable]
 public class StatisticalData
 {

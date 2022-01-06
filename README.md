@@ -3,13 +3,26 @@ This project is a Japanese language learning practice tool built using the Unity
 
 ## Installation
 This project is extrememly simple to install and use on your Windows system. First, navigate to the branches on the github page.
+
 ![Branches](docs/screenshot-branches.png)
+
 Select the `Tags` option
+
 ![Branches List](docs/screenshot-branches-list.png)
+
 Locate the latest verion of the App
+
 ![Tags](docs/screenshot-latest-tag.png)
+
 Navigate to that version and fork the repository. The only folder you need to worry about is the `"Japanese Practice [version number]"` folder. This will contain the executable file for the app and all of the files it needs to run.
-![Version](docs/screenshit-version.png)
+
+![Version](docs/screenshot-version.png)
+
 The folder with the application can be installed and run anywhere you desire on your machine.
 
 ## Usage
+After launching the application, you should see the main menu which will look like this:
+
+![Main Menu](docs/main-menu.png)
+
+From there you can run the application and practice your Japanese skills! 

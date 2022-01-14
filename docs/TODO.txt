@@ -4,3 +4,5 @@ TODO
 - have the word be automatically entered into the chat challenge mode when it is spelled instead of needing to hit enter
 - Display the mistakes in various gradients of colors so bigger mistakes stand out
 - Add the phrases or vacabulary section
+IMPORTANT
+- On releases, instead of having the whole folder there, upload the zip so it is easier to access for people without github

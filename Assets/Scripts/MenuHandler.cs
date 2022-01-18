@@ -34,9 +34,9 @@ public class MenuHandler : MonoBehaviour
         SceneManager.LoadScene("KatakanaMenu");
     }
 
-    public void LoadPhrases() {
-        //SoundManager.instance.Play("Bloop 1");
-        //SceneManager.LoadScene("PhrasesMenu");
+    public void LoadVocabulary() {
+        SoundManager.instance.Play("Bloop 1");
+        SceneManager.LoadScene("VocabularyMenu");
     }
 
     public void LoadStats() {

@@ -18,6 +18,6 @@ EditorBuildSettings:
     path: Assets/Scenes/StatisticsMenu.unity
     guid: dc2c700b3c4d270489cd843a2a3a42f8
   - enabled: 1
-    path: Assets/Scenes/PhrasesMenu.unity
+    path: Assets/Scenes/VocabularyMenu.unity
     guid: 644a9ac6ec879bf42b99195b69162a17
   m_configObjects: {}

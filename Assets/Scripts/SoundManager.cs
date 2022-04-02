@@ -1,6 +1,6 @@
 ﻿/// <summary>
 /// The SoundManager is a singleton that is loaded at the start of the application
-/// and controls all of the counds that the application uses. The sound manager
+/// and controls all of the sounds that the application uses. The sound manager
 /// is not destroyed upon loading in new scenes to help speed up performance.
 /// </summary>
 
@@ -29,6 +29,11 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    public void ChangeAudioVolume() {
+        foreach (Sound s in sounds) {
+            s.source.volume = 0.1f;
+        }
+    }
 
 
     public void Play(string name) {

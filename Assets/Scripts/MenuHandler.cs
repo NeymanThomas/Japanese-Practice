@@ -10,9 +10,6 @@
 ///     -> Quit button to exit the application
 /// </summary>
 
-// TODO add support for the Phrases Scene
-// =======================================
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -22,7 +19,12 @@ public class MenuHandler : MonoBehaviour
 {
     [SerializeField] private Button btnDeleteStats;
     [SerializeField] private Button btnDeleteScores;
+    [SerializeField] private GameObject pnlSettings;
     private bool statsFlag, scoresFlag;
+
+    void Start() {
+        pnlSettings.SetActive(false);
+    }
 
     public void LoadHiragana() {
         SoundManager.instance.Play("Bloop 1");
@@ -34,14 +36,25 @@ public class MenuHandler : MonoBehaviour
         SceneManager.LoadScene("KatakanaMenu");
     }
 
-    public void LoadVocabulary() {
+    public void LoadTopics() {
         SoundManager.instance.Play("Bloop 1");
-        SceneManager.LoadScene("VocabularyMenu");
+        SceneManager.LoadScene("TopicsMenu");
     }
 
     public void LoadStats() {
         SoundManager.instance.Play("Bloop 1");
         SceneManager.LoadScene("StatisticsMenu");
+    }
+
+    public void OpenSettings() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(true);
+        SoundManager.instance.ChangeAudioVolume();
+    }
+
+    public void SettingsBack() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(false);
     }
 
     public void DeleteStats() {

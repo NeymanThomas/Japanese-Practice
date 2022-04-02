@@ -29,9 +29,9 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void ChangeAudioVolume() {
+    public void ChangeAudioVolume(float newVolume) {
         foreach (Sound s in sounds) {
-            s.source.volume = 0.1f;
+            s.source.volume = newVolume;
         }
     }
 

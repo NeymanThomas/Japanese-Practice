@@ -205,20 +205,6 @@ public class StatsMenuHandler : MonoBehaviour
 
     public void Back() {
         SoundManager.instance.Play("Bloop 1");
-        if (hiraganaPanel.gameObject.activeSelf == true) {
-            hiraganaPanel.gameObject.SetActive(false);
-            katakanaPanel.gameObject.SetActive(true);
-            UpdateKatakanaScores();
-        }
-        else if (katakanaPanel.gameObject.activeSelf == true) {
-            hiraganaPanel.gameObject.SetActive(true);
-            katakanaPanel.gameObject.SetActive(false);
-            UpdateHiraganaScores();
-        }
-    }
-
-    public void Exit() {
-        SoundManager.instance.Play("Bloop 1");
         SceneManager.LoadScene("MainMenu");
     }
 }

@@ -20,6 +20,7 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private Button btnDeleteStats;
     [SerializeField] private Button btnDeleteScores;
     [SerializeField] private GameObject pnlSettings;
+    [SerializeField] private TMP_Text txtVolumeNumber;
     private bool statsFlag, scoresFlag;
 
     void Start() {
@@ -44,17 +45,6 @@ public class MenuHandler : MonoBehaviour
     public void LoadStats() {
         SoundManager.instance.Play("Bloop 1");
         SceneManager.LoadScene("StatisticsMenu");
-    }
-
-    public void OpenSettings() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlSettings.SetActive(true);
-        SoundManager.instance.ChangeAudioVolume();
-    }
-
-    public void SettingsBack() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlSettings.SetActive(false);
     }
 
     public void DeleteStats() {
@@ -84,6 +74,25 @@ public class MenuHandler : MonoBehaviour
             btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "Scores Deleted";
         }
     }
+
+    #region Settings Methods
+
+    public void OpenSettings() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(true);
+    }
+
+    public void AdjustVolume(float newVolume) {
+        SoundManager.instance.ChangeAudioVolume(newVolume);
+        txtVolumeNumber.text = Mathf.RoundToInt(newVolume * 100).ToString();
+    }
+
+    public void SettingsBack() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(false);
+    }
+
+    #endregion
 
     public void Quit() {
         Application.Quit();

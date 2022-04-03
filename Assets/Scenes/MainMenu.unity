@@ -1120,6 +1120,7 @@ MonoBehaviour:
   btnDeleteScores: {fileID: 1006326083}
   pnlSettings: {fileID: 1539331814}
   txtVolumeNumber: {fileID: 913744323}
+  scrollbar: {fileID: 1913455927}
 --- !u!4 &515535640
 Transform:
   m_ObjectHideFlags: 0

@@ -61,6 +61,63 @@ public class MenuHandler : MonoBehaviour
         SceneManager.LoadScene("StatisticsMenu");
     }
 
+    #region Dictionary Methods
+
+    // Initializes the dictionary panel 
+    public void LoadDictionary() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlDictionary.SetActive(true);
+        txtResult.text = "日本語";
+        dictionaryInput.text = "";
+    }
+
+    /// <summary>
+    /// Called by the main menu when a word is entered into the dictionary input field.
+    /// The string from the input field is sent to the static JapaneseDictionaries class
+    /// and passed to the DictionaryLookup function. If the DictionaryLookup finds a match
+    /// for the key sent, it will then send back the element matched with the key. If the
+    /// word has no match, instead a literal string of "Error" will be sent back instead.
+    /// </summary>
+    public void WordLookup() {
+        string result = JapaneseDictionaries.DictionaryLookup(dictionaryInput.text);
+        if (result != "Error") 
+        {
+            SoundManager.instance.Play("Bloop 1");
+            txtResult.text = result;
+        } 
+        else 
+        {
+            SoundManager.instance.Play("Bloop 4");
+            dictionaryInput.text = "Word Not Found!";
+        }
+    }
+
+    // Returns to the main menu from the dictionary panel
+    public void BackToMainMenu() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlDictionary.SetActive(false);
+    }
+
+    #endregion
+
+    #region Settings Methods
+
+    public void OpenSettings() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(true);
+        scrollbar.value = SoundManager.instance.sounds[0].source.volume;
+    }
+
+    public void AdjustVolume(float newVolume) {
+        SoundManager.instance.ChangeAudioVolume(newVolume);
+        txtVolumeNumber.text = Mathf.RoundToInt(newVolume * 100).ToString();
+    }
+
+    public void SettingsBack() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlSettings.SetActive(false);
+    }
+
     public void DeleteStats() {
         SoundManager.instance.Play("Bloop 3");
         if (statsFlag == false) {
@@ -87,46 +144,6 @@ public class MenuHandler : MonoBehaviour
             btnDeleteScores.image.color = new Color32(255, 255, 255, 255);
             btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "Scores Deleted";
         }
-    }
-
-    #region Dictionary Methods
-
-    public void LoadDictionary() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlDictionary.SetActive(true);
-        txtResult.text = "日本語";
-        dictionaryInput.text = "";
-    }
-
-    public void WordLookup() {
-        string result = JapaneseDictionaries.DictionaryLookup(dictionaryInput.text);
-        txtResult.text = result;
-        Debug.Log(result);
-    }
-
-    public void BackToMainMenu() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlDictionary.SetActive(false);
-    }
-
-    #endregion
-
-    #region Settings Methods
-
-    public void OpenSettings() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlSettings.SetActive(true);
-        scrollbar.value = SoundManager.instance.sounds[0].source.volume;
-    }
-
-    public void AdjustVolume(float newVolume) {
-        SoundManager.instance.ChangeAudioVolume(newVolume);
-        txtVolumeNumber.text = Mathf.RoundToInt(newVolume * 100).ToString();
-    }
-
-    public void SettingsBack() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlSettings.SetActive(false);
     }
 
     #endregion

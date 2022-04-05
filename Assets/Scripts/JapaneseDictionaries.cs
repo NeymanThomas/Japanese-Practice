@@ -3,9 +3,14 @@ using System.Text.RegularExpressions;
 
 public static class JapaneseDictionaries
 {
-    public static Regex rgx = new Regex("[^a-zA-Z -]");
-
+    /// <summary>
+    /// Static utility function that sanitizes a lookup string then compares the string itself
+    /// as a key to entires in the EnglishToJapanese dictionary. 
+    /// </summary>
+    /// <param name="lookup">The string being searched for in the dictionary</param>
+    /// <returns>The japanese translation if true, the string "Error" if false</returns>
     public static string DictionaryLookup(string lookup) {
+        Regex rgx = new Regex("[^a-zA-Z -]");
         lookup = rgx.Replace(lookup, "");
         lookup = lookup.ToLower();
         if(EnglishToJapanese.ContainsKey(lookup)) {

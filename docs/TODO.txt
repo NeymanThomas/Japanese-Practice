@@ -1,9 +1,11 @@
 TODO
 =============================================
 - Add a new stat that tracks the total amount of time spent practicing
+- update the saving system. It should just go into one big save file
+- Make sure the same word can't appear in a row when practicing
+- Add a 'pronunciation' button in the vocabulary sections
 - Add save file for user preferences like their settings
 - have the word be automatically entered into the chat challenge mode when it is spelled instead of needing to hit enter
 - Display the mistakes in various gradients of colors so bigger mistakes stand out
-- Add the phrases or vocabulary section
 IMPORTANT
 - On releases, instead of having the whole folder there, upload the zip so it is easier to access for people without github

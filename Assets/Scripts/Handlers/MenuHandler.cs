@@ -20,12 +20,25 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private Button btnDeleteStats;
     [SerializeField] private Button btnDeleteScores;
     [SerializeField] private GameObject pnlSettings;
+    [SerializeField] private GameObject pnlDictionary;
     [SerializeField] private TMP_Text txtVolumeNumber;
+    [SerializeField] private TMP_Text txtResult;
     [SerializeField] private Slider scrollbar;
+    [SerializeField] private TMP_InputField dictionaryInput;
     private bool statsFlag, scoresFlag;
 
     void Start() {
+        initSettings();
         pnlSettings.SetActive(false);
+        pnlDictionary.SetActive(false);
+    }
+
+    /// <summary>
+    /// Function that will handle loading in all of the user data and settings
+    /// that need to be taken care of.
+    /// </summary>
+    private void initSettings() {
+
     }
 
     public void LoadHiragana() {
@@ -64,7 +77,7 @@ public class MenuHandler : MonoBehaviour
 
     public void DeleteScores() {
         SoundManager.instance.Play("Bloop 3");
-        if (!scoresFlag == false) {
+        if (scoresFlag == false) {
             btnDeleteScores.image.color = new Color32(255, 0, 0, 255);
             btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "ARE YOU SURE?";
             scoresFlag = true;
@@ -75,6 +88,28 @@ public class MenuHandler : MonoBehaviour
             btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "Scores Deleted";
         }
     }
+
+    #region Dictionary Methods
+
+    public void LoadDictionary() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlDictionary.SetActive(true);
+        txtResult.text = "日本語";
+        dictionaryInput.text = "";
+    }
+
+    public void WordLookup() {
+        string result = JapaneseDictionaries.DictionaryLookup(dictionaryInput.text);
+        txtResult.text = result;
+        Debug.Log(result);
+    }
+
+    public void BackToMainMenu() {
+        SoundManager.instance.Play("Bloop 1");
+        pnlDictionary.SetActive(false);
+    }
+
+    #endregion
 
     #region Settings Methods
 

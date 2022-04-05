@@ -1,8 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public static class JapaneseDictionaries
 {
+    public static Regex rgx = new Regex("[^a-zA-Z -]");
+
+    public static string DictionaryLookup(string lookup) {
+        lookup = rgx.Replace(lookup, "");
+        lookup = lookup.ToLower();
+        if(EnglishToJapanese.ContainsKey(lookup)) {
+            return EnglishToJapanese[lookup];
+        }
+        return "Error";
+    }
+
     #region Japanese-to-English
     // Dictionary containing the list of vocabulary from Japanese into English
     public static readonly Dictionary<string, string> JapaneseToEnglish = new Dictionary<string, string>
@@ -69,6 +80,7 @@ public static class JapaneseDictionaries
 
     #endregion
 
+    #region English-to-Japanese
     // Dictionary containing the list of vocabulary from English into Japanese
     public static readonly Dictionary<string, string> EnglishToJapanese = new Dictionary<string, string>
     {
@@ -124,4 +136,6 @@ public static class JapaneseDictionaries
         {"younger brother", "弟, おとうと"}
         #endregion
     };
+
+    #endregion
 }

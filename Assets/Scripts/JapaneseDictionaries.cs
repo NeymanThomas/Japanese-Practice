@@ -26,7 +26,8 @@ public static class JapaneseDictionaries
         #region chapter 1
         {"ともだち", "friend"},
         {"英語", "english language"},
-        {"ええ, はい", "yes"},
+        {"はい", "yes"},
+        {"ええ", "yes"},
         {"いま", "now"},
         {"学生", "student"},
         {"高校", "high school"},
@@ -71,8 +72,10 @@ public static class JapaneseDictionaries
         {"お父さん", "father"},
         {"お姉さん", "older sister"},
         {"お兄さん", "older brother"},
-        {"妹, いもうと", "younger sister"},
-        {"弟, おとうと", "younger brother"},
+        {"いもうと", "younger sister"},
+        {"妹", "younger sister"},
+        {"おとうと", "younger brother"},
+        {"弟", "younger brother"},
         #endregion
         {"月曜日", "monday"},
         {"火曜日", "tuesday"},
@@ -139,6 +142,54 @@ public static class JapaneseDictionaries
         {"older brother", "お兄さん"},
         {"younger sister", "妹, いもうと"},
         {"younger brother", "弟, おとうと"}
+        #endregion
+    };
+
+    #endregion
+
+    #region Kanji-to-Hiragana
+    // Dictionary for converting kanji characters into hiragana pronunciations
+    public static readonly Dictionary<string, string> KanjiToHiragana = new Dictionary<string, string> 
+    {
+        #region chapter 1
+        {"英語", "えいご"},
+        {"学生", "がくせい"},
+        {"高校", "こうこう"},
+        {"午後", "ごご"},
+        {"午前", "ごぜん"},
+        {"専攻", "せんこう"},
+        {"先生", "せんせい"},
+        {"大学", "だいがく"},
+        {"電話", "でんわ"},
+        {"名前", "なまえ"},
+        {"何", "なに / なん"},
+        {"日本", "にほん"},
+        {"半", "はん"},
+        {"番号", "ばんごう"},
+        {"留学生", "りゅうがくせい"},
+        {"私", "わたし"},
+        {"韓国", "かんこく"},
+        {"中国", "ちゅうごく"},
+        {"科学", "かがく"},
+        {"経済", "けいざい"},
+        {"国際関係", "こくさいかんけい"},
+        {"政治", "せいじ"},
+        {"文学", "ぶんがく"},
+        {"歴史", "れきし"},
+        {"仕事", "しごと"},
+        {"医者", "いしゃ"},
+        {"会社員", "かいしゃいん"},
+        {"高校生", "こうこうせい"},
+        {"主婦", "しゅふ"},
+        {"大学院生", "だいがくいんせい"},
+        {"大学生", "だいがくせい"},
+        {"弁護士", "べんごし"},
+        {"お母さん", "おかあさん"},
+        {"お父さん", "おとうさん"},
+        {"お姉さん", "おねえさん"},
+        {"お兄さん", "おにいさん"},
+        {"妹", "いもうと"},
+        {"弟", "おとうと"}
         #endregion
     };
 

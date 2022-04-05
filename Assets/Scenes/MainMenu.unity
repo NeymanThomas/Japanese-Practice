@@ -505,7 +505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: Enter English Word...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1569,8 +1569,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u65E5\u672C\u8A9E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d8f687d55dbddd042a88d1f4dafe268d, type: 2}
-  m_sharedMaterial: {fileID: -7087042131117522007, guid: d8f687d55dbddd042a88d1f4dafe268d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2f0f9b86dbb065418a34939df580d42, type: 2}
+  m_sharedMaterial: {fileID: -4206979356976641229, guid: f2f0f9b86dbb065418a34939df580d42, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

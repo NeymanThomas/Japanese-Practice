@@ -1,6 +1,7 @@
 TODO
 =============================================
 - fill out all dictionaries
+- add a chapter select for vocab practice
 - Add a new stat that tracks the total amount of time spent practicing
 - Make it so you can see your high scores on the stats screen without having to actually do a challenge
 - Add a pronunciation option for the dictionary so if the user doesn't know how to pronounce the kanji, they can see

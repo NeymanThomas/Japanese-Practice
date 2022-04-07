@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MenuHandler : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private TMP_Text txtResult;
     [SerializeField] private Slider scrollbar;
     [SerializeField] private TMP_InputField dictionaryInput;
+    [SerializeField] private TMP_Dropdown graphicsDropdown;
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    private Resolution[] resolutions;
     private bool statsFlag, scoresFlag;
 
     void Start() {
@@ -33,12 +37,9 @@ public class MenuHandler : MonoBehaviour
         pnlDictionary.SetActive(false);
     }
 
-    /// <summary>
-    /// Function that will handle loading in all of the user data and settings
-    /// that need to be taken care of.
-    /// </summary>
+    // Function that will handle loading in all of the user data and settings that need to be taken care of.
     private void initSettings() {
-
+        // load user settings
     }
 
     public void LoadHiragana() {
@@ -105,7 +106,29 @@ public class MenuHandler : MonoBehaviour
     public void OpenSettings() {
         SoundManager.instance.Play("Bloop 1");
         pnlSettings.SetActive(true);
+
+        // set the scrollbar value to the current sound setting
         scrollbar.value = SoundManager.instance.sounds[0].source.volume;
+
+        // set the graphics setting to the current graphics quality
+        graphicsDropdown.value = QualitySettings.GetQualityLevel();
+
+        // Add the available screen resolutions to the dropdown
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+        int currentResolution = 0;
+        List<string> options = new List<string>();
+        for (int i = 0; i < resolutions.Length; i++) {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height) {
+                currentResolution = i;
+            }
+        }
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolution;
+        resolutionDropdown.RefreshShownValue();
     }
 
     public void AdjustVolume(float newVolume) {
@@ -113,9 +136,22 @@ public class MenuHandler : MonoBehaviour
         txtVolumeNumber.text = Mathf.RoundToInt(newVolume * 100).ToString();
     }
 
+    public void AdjustGraphics(int quality) {
+        QualitySettings.SetQualityLevel(quality);
+    }
+
+    public void AdjustFullscreen(bool isFullscreen) {
+        Screen.fullScreen = isFullscreen;
+    }
+
     public void SettingsBack() {
         SoundManager.instance.Play("Bloop 1");
         pnlSettings.SetActive(false);
+    }
+
+    public void AdjustResolution(int resolutionIndex) {
+        Resolution res = resolutions[resolutionIndex];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
 
     public void DeleteStats() {

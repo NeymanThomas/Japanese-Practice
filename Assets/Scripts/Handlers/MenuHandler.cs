@@ -40,6 +40,8 @@ public class MenuHandler : MonoBehaviour
     // Function that will handle loading in all of the user data and settings that need to be taken care of.
     private void initSettings() {
         // load user settings
+        // Volume setting, graphic setting, resolution, fullscreen
+        // check to see if save files exist
     }
 
     public void LoadHiragana() {
@@ -91,6 +93,11 @@ public class MenuHandler : MonoBehaviour
             SoundManager.instance.Play("Bloop 4");
             dictionaryInput.text = "Word Not Found!";
         }
+    }
+
+    public void WordPronunciation() {
+        SoundManager.instance.Play("Bloop 1");
+        Debug.LogWarning("Not Implemented");
     }
 
     // Returns to the main menu from the dictionary panel

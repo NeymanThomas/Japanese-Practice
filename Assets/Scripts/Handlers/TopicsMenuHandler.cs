@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -10,7 +8,6 @@ public class TopicsMenuHandler : MonoBehaviour
     [SerializeField] private TMP_Dropdown TopicSelect;
     [SerializeField] private TMP_Text ModeButtonText;
     public static Chapter SelectedChapter;
-    public static Topic SelectedTopic;
     public static bool JapaneseToEnglish;
 
     public enum Chapter {
@@ -33,20 +30,34 @@ public class TopicsMenuHandler : MonoBehaviour
 
     private void Start() {
         SelectedChapter = Chapter.All;
-        SelectedTopic = Topic.All;
         JapaneseToEnglish = true;
         ChapterSelect.value = (int)SelectedChapter;
-        TopicSelect.value = (int)SelectedTopic;
+        TopicSelect.value = 0;
     }
 
-    public void LoadJapaneseToEnglish() {
-        if (validateSelection()) {
-            SelectedChapter = (Chapter)ChapterSelect.value;
-            SelectedTopic = (Topic)TopicSelect.value;
-            SoundManager.instance.Play("Bloop 1");
-            SceneManager.LoadScene("VocabularyScene");
-        } else {
-            SoundManager.instance.Play("Bloop 4");
+    public void LoadNextScene() {
+        switch(TopicSelect.value) {
+            case (int)Topic.All:
+                SelectedChapter = (Chapter)ChapterSelect.value;
+                SoundManager.instance.Play("Bloop 1");
+                SceneManager.LoadScene("VocabularyScene");
+                break;
+            case (int)Topic.Nouns:
+                SoundManager.instance.Play("Bloop 1");
+                SceneManager.LoadScene("NounScene");
+                break;
+            case (int)Topic.Verbs:
+                SoundManager.instance.Play("Bloop 1");
+                SceneManager.LoadScene("NounScene");
+                break;
+            case (int)Topic.Adjectives:
+                SoundManager.instance.Play("Bloop 1");
+                SceneManager.LoadScene("NounScene");
+                break;
+            case (int)Topic.Adverbs:
+                SoundManager.instance.Play("Bloop 1");
+                SceneManager.LoadScene("NounScene");
+                break;
         }
     }
 
@@ -59,10 +70,6 @@ public class TopicsMenuHandler : MonoBehaviour
             JapaneseToEnglish = true;
             ModeButtonText.text = "JPN to ENG";
         }
-    }
-
-    private bool validateSelection() {
-        return true;
     }
 
     public void BackToMain() {

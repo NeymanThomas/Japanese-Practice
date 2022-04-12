@@ -19,6 +19,13 @@ public static class JapaneseDictionaries
         return "Error";
     }
 
+    public static string PronunciationLookup(string lookup) {
+        if (KanjiToHiragana.ContainsKey(lookup)) {
+            return KanjiToHiragana[lookup];
+        }
+        return "Error";
+    }
+
     #region Japanese-to-English
     // Dictionary containing the list of vocabulary from Japanese into English
     public static readonly Dictionary<string, string> JapaneseToEnglish = new Dictionary<string, string>
@@ -446,7 +453,7 @@ public static class JapaneseDictionaries
         {"～枚", "counter for flat objects"},
         {"～まで", "to (a place); as far as (a place); till (a time)"},
         #endregion
-        // Elements 405 -
+        // Elements 405 - 452
         #region chapter 6
         {"お金", "money"},
         {"お風呂", "bath"},
@@ -497,7 +504,6 @@ public static class JapaneseDictionaries
         {"本当ですか", "really?"},
         {"ゆっくり", "slowly; leisurely; unhurriedly"},
         #endregion
-        {"", ""}
     };
 
     #endregion
@@ -1025,7 +1031,6 @@ public static class JapaneseDictionaries
         {"leisurely", "ゆっくり"},
         {"slowly", "ゆっくり"},
         #endregion
-        {"", ""}
     };
 
     #endregion
@@ -1268,6 +1273,7 @@ public static class JapaneseDictionaries
         {"近く", "ちかく"},
         {"隣", "となり"},
         {"間", "あいだ"},
+        {"隣 / 次", "となり / つぎ"},
         {"一月", "いちがつ"},
         {"二月", "にがつ"},
         {"三月", "さんがつ"},
@@ -1316,6 +1322,7 @@ public static class JapaneseDictionaries
         {"新しい", "あたらしい"},
         {"暑い", "あつい"},
         {"熱い", "あつい"},
+        {"熱い / 暑い", "あつい"},
         {"忙しい", "いそがしい"},
         {"大きい", "おおきい"},
         {"面白い", "おもしろい"},
@@ -1387,7 +1394,6 @@ public static class JapaneseDictionaries
         {"結構です", "けっこうです"},
         {"本当ですか", "ほんとうですか"},
         #endregion
-        {"", ""}
     };
 
     #endregion

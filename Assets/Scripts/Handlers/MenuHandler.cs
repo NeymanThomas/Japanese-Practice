@@ -96,8 +96,12 @@ public class MenuHandler : MonoBehaviour
     }
 
     public void WordPronunciation() {
-        SoundManager.instance.Play("Bloop 1");
-        Debug.LogWarning("Not Implemented");
+        string pronunciation = JapaneseDictionaries.PronunciationLookup(txtResult.text);
+        if (pronunciation != "Error") 
+        {
+            SoundManager.instance.Play("Bloop 1");
+            txtResult.text = pronunciation;
+        }
     }
 
     // Returns to the main menu from the dictionary panel

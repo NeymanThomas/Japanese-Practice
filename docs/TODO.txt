@@ -1,11 +1,10 @@
 TODO
 =============================================
-1 Change the size of the text for how long the string will be
 - Add a new stat that tracks the total amount of time spent practicing
 - Make it so you can see your high scores on the stats screen without having to actually do a challenge
 - Add a different sound for searching a word in the dictionary
 - update the saving system. It should just go into one big save file
-2 Make sure the same word can't appear in a row when practicing
+1 Make sure the same word can't appear in a row when practicing
 - Add save file for user preferences like their settings
 - have the word be automatically entered into the chat challenge mode when it is spelled instead of needing to hit enter
 IMPORTANT

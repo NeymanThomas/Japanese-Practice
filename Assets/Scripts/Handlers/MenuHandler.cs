@@ -86,6 +86,14 @@ public class MenuHandler : MonoBehaviour
         if (result != "Error") 
         {
             SoundManager.instance.Play("Bloop 1");
+            txtResult.fontSize = 240;
+            if (result.Length > 6) 
+            {
+                for (int i = 6; i < result.Length; i++)
+                {
+                    txtResult.fontSize -= 20;
+                }
+            }
             txtResult.text = result;
         } 
         else 

@@ -27,16 +27,20 @@ public class VocabularySceneHandler : MonoBehaviour
         initVocabSettings();
     }
 
-    private void initVocabSettings() {
+    private void initVocabSettings()
+    {
         // Check if the user selected Japanese to English or
         // English to Japanese, then activate the appropriate buttons.
-        if (TopicsMenuHandler.JapaneseToEnglish) {
+        if (TopicsMenuHandler.JapaneseToEnglish)
+        {
             NextJapaneseButton.SetActive(true);
             ShowEnglishButton.SetActive(true);
             NextEnglishButton.SetActive(false);
             ShowJapaneseButton.SetActive(false);
             QuestionText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key;
-        } else {
+        }
+        else
+        {
             NextJapaneseButton.SetActive(false);
             ShowEnglishButton.SetActive(false);
             NextEnglishButton.SetActive(true);
@@ -79,6 +83,66 @@ public class VocabularySceneHandler : MonoBehaviour
         }
     }
 
+    // This function prints the Japanese word at the current element, but ensures
+    // that if the word becomes too long in length, the font will shrink according
+    // to the word's length
+    private void generateJapaneseString(TMP_Text t) 
+    {
+        t.fontSize = 240;
+        string temp = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key;
+
+        if (temp.Length > 6) 
+        {
+            for (int i = 6; i < temp.Length; i++)
+            {
+                t.fontSize -= 20;
+            }
+        }
+        t.text = temp;
+    }
+
+    // This function prints the English word at the current element, but ensures
+    // that if the word becomes too long in length, the font will shrink according
+    // to the word's length
+    private void generateEnglishString(TMP_Text t) 
+    {
+        t.fontSize = 180;
+        string temp = AnswerText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Value;
+
+        if (temp.Length > 16) 
+        {
+            for (int i = 16; i < temp.Length; i++) 
+            {
+                if (t.fontSize > 90)
+                {
+                    t.fontSize -= 10;
+                }
+            }
+        }
+        t.text = temp;
+    }
+
+    // This function prints the hiragana pronunciation at the current element, but ensures
+    // that if the word becomes too long in length, the font will shrink according
+    // to the word's length
+    private void generatePronunciationString(TMP_Text t) 
+    {
+        t.fontSize = 180;
+        string temp = JapaneseDictionaries.KanjiToHiragana[JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key];
+
+        if (temp.Length > 8) 
+        {
+            for (int i = 8; i < temp.Length; i++)
+            {
+                if (t.fontSize > 90)
+                {
+                    t.fontSize -= 10;
+                }
+            }
+        }
+        t.text = temp;
+    }
+
     #region Button Methods
 
     public void NextJapaneseQuestion() {
@@ -86,13 +150,13 @@ public class VocabularySceneHandler : MonoBehaviour
         AnswerText.text = "";
         PronunciationText.text = "";
         currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
-        QuestionText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key;
+        generateJapaneseString(QuestionText);
     }
 
     public void ShowEnglishAnswer() {
         SoundManager.instance.Play("Bloop 1");
         PronunciationText.text = "";
-        AnswerText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Value;
+        generateEnglishString(AnswerText);
     }
 
     public void NextEnglishQuestion() {
@@ -100,19 +164,19 @@ public class VocabularySceneHandler : MonoBehaviour
         QuestionText.text = "";
         PronunciationText.text = "";
         currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
-        AnswerText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Value;
+        generateEnglishString(AnswerText);
     }
 
     public void ShowJapaneseAnswer() {
         SoundManager.instance.Play("Bloop 1");
-        QuestionText.text = JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key;
+        generateJapaneseString(QuestionText);
     }
 
     public void ShowPronunciation() {
         if (JapaneseDictionaries.KanjiToHiragana.ContainsKey(JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key)) {
             AnswerText.text = "";
             SoundManager.instance.Play("Bloop 1");
-            PronunciationText.text = JapaneseDictionaries.KanjiToHiragana[JapaneseDictionaries.JapaneseToEnglish.ElementAt(currentIndex).Key];
+            generatePronunciationString(PronunciationText);
         }
     }
 

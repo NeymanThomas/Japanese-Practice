@@ -16,130 +16,146 @@ using System;
 
 public static class SaveSystem
 {
-    public static bool H_Score_Exists() {
-        if (File.Exists(Application.persistentDataPath + "/h_score.tommy")) {
+    // the file path where the stats are saved
+    private static string statsPath = Application.persistentDataPath + "/stats.json";
+
+    // This function creates a new StatisticalData object and writes it to the
+    // filepath. This will be called when no stats file is found.
+    public static void CreateStatsFile() 
+    {
+        // Create a brand new StatisticalData Object
+        StatisticalData stats = new StatisticalData();
+        // convert the stats string into Json string
+        string json = JsonUtility.ToJson(stats);
+        // Write the json string into the file
+        File.WriteAllText(statsPath, json);
+    }
+
+
+    public static void UpdateHiraganaStats(int element) 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
+        }
+        // increment mistake by 1
+        // convert the loaded stats string back into Json string
+        string json = JsonUtility.ToJson(LoadStats().hiraganaMistakes[element]++);
+        // Write the json string back into the file
+        File.WriteAllText(statsPath, json);
+    }
+
+
+    public static void UpdateKatakanaStats(int element) 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
+        }
+        // read the file in as a string from the path
+        string stats = File.ReadAllText(statsPath);
+        // convert the string into StatisticalData from json
+        StatisticalData loadedStats = JsonUtility.FromJson<StatisticalData>(stats);
+        // increment mistake by 1
+        loadedStats.katakanaMistakes[element]++;
+        // convert the loaded stats string back into Json string
+        string json = JsonUtility.ToJson(loadedStats);
+        // Write the json string back into the file
+        File.WriteAllText(statsPath, json);
+    }
+
+
+    public static bool UpdateHiraganaHighscore(float score) 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
+        }
+        // read the file in as a string from the path
+        string stats = File.ReadAllText(statsPath);
+        // convert the string into StatisticalData from json
+        StatisticalData loadedStats = JsonUtility.FromJson<StatisticalData>(stats);
+
+        if (loadedStats.hiraganaHighscore < score) 
+        {
+            // Set the new highscore
+            loadedStats.hiraganaHighscore = score;
+            // convert the loaded stats string back into Json string
+            string json = JsonUtility.ToJson(loadedStats);
+            // Write the json string back into the file
+            File.WriteAllText(statsPath, json);
             return true;
         }
         return false;
     }
 
-    public static bool K_Score_Exists() {
-        if (File.Exists(Application.persistentDataPath + "/k_score.tommy")) {
+
+    public static bool UpdateKatakanaHighscore(float score) 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
+        }
+        // read the file in as a string from the path
+        string stats = File.ReadAllText(statsPath);
+        // convert the string into StatisticalData from json
+        StatisticalData loadedStats = JsonUtility.FromJson<StatisticalData>(stats);
+
+        if (loadedStats.katakanaHighscore < score) 
+        {
+            // Set the new highscore
+            loadedStats.katakanaHighscore = score;
+            // convert the loaded stats string back into Json string
+            string json = JsonUtility.ToJson(loadedStats);
+            // Write the json string back into the file
+            File.WriteAllText(statsPath, json);
             return true;
         }
         return false;
     }
 
-    public static bool Stats_Exist() {
-        if (File.Exists(Application.persistentDataPath + "/stats.tommy")) {
-            return true;
-        }
-        return false;
-    }
 
-    // Saves a high score from the Hiragana Challenge Mode
-    public static void Save_H_Score(float score) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/h_score.tommy";
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        formatter.Serialize(stream, score);
-        stream.Close();
-    }
-
-    // Saves a high score from the Katakana Challenge Mode
-    public static void Save_K_Score(float score) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/k_score.tommy";
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        formatter.Serialize(stream, score);
-        stream.Close();
-    }
-
-    // accepts the string for the Hiragana that caused you to fail the challenge 
-    // mode and tallies it to your stats.
-    public static void Save_Hiragana(string h) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/stats.tommy";
-        if (File.Exists(path)) {
-            StatisticalData stats = Load_Stats();
-            stats.add_H_Stat(h);
-            FileStream stream = new FileStream(path, FileMode.Create);
-            formatter.Serialize(stream, stats);
-            stream.Close();
-        }
-        else {
-            StatisticalData stats = new StatisticalData();
-            stats.add_H_Stat(h);
-            FileStream stream = new FileStream(path, FileMode.Create);
-            formatter.Serialize(stream, stats);
-            stream.Close();
-        }
-    }
-
-    // accepts the string for the Katakana that caused you to fail the challenge 
-    // mode and tallies it to your stats.
-    public static void Save_Katakana(string h) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/stats.tommy";
-        if (File.Exists(path)) {
-            StatisticalData stats = Load_Stats();
-            stats.add_K_Stat(h);
-            FileStream stream = new FileStream(path, FileMode.Create);
-            formatter.Serialize(stream, stats);
-            stream.Close();
-        }
-        else {
-            StatisticalData stats = new StatisticalData();
-            stats.add_K_Stat(h);
-            FileStream stream = new FileStream(path, FileMode.Create);
-            formatter.Serialize(stream, stats);
-            stream.Close();
-        }
-    }
-
-    public static StatisticalData Load_Stats() {
-        string path = Application.persistentDataPath + "/stats.tommy";
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Open);
-
-        StatisticalData stats = formatter.Deserialize(stream) as StatisticalData;
-        stream.Close();
-        return stats;
-    }
-
-    public static float Load_H_Score() {
-        string path = Application.persistentDataPath + "/h_score.tommy";
-        if (File.Exists(path)) {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            float loadedScore = (float)formatter.Deserialize(stream);
-            stream.Close();
-            return loadedScore;
-        }
-        else {
-            Debug.LogError("Save file not found in " + path);
+    public static float LoadHiraganaScore() 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
             return 0;
         }
+        return LoadStats().hiraganaHighscore;
     }
 
-    public static float Load_K_Score() {
-        string path = Application.persistentDataPath + "/k_score.tommy";
-        if (File.Exists(path)) {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
 
-            float loadedScore = (float)formatter.Deserialize(stream);
-            stream.Close();
-            return loadedScore;
-        }
-        else {
-            Debug.LogError("Save file not found in " + path);
+    public static float LoadKatakanaScore() 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
             return 0;
         }
+        return LoadStats().katakanaHighscore;
     }
+
+
+    public static StatisticalData LoadStats() 
+    {
+        // read the file in as a string from the path
+        string stats = File.ReadAllText(statsPath);
+        // convert the string into StatisticalData from json
+        StatisticalData loadedStats = JsonUtility.FromJson<StatisticalData>(stats);
+        return loadedStats;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public static void DeleteStats() {
         string path = Application.persistentDataPath + "/stats.tommy";

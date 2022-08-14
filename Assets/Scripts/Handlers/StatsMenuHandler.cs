@@ -29,6 +29,7 @@ public class StatsMenuHandler : MonoBehaviour
         }
     }
 
+/*
     public void UpdateHiraganaScores() {
         h_scoreBlock_1.text = stats.h_A.ToString();
         h_scoreBlock_1.text += "\n" + stats.h_I.ToString();
@@ -188,6 +189,7 @@ public class StatsMenuHandler : MonoBehaviour
         k_scoreBlock_7.text += "\n" + stats.k_Pe.ToString();
         k_scoreBlock_7.text += "\n" + stats.k_Po.ToString();
     }
+    */
 
     public void Next() {
         SoundManager.instance.Play("Bloop 1");

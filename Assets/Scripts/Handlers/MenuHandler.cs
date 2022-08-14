@@ -44,6 +44,11 @@ public class MenuHandler : MonoBehaviour
         // check to see if save files exist
     }
 
+    public void TestSaveSystem() 
+    {
+        SaveSystem.UpdateHiraganaStats(23);
+    }
+
     public void LoadHiragana() {
         SoundManager.instance.Play("Bloop 1");
         SceneManager.LoadScene("HiraganaMenu");

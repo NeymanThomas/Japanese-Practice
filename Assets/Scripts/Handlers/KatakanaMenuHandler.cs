@@ -432,6 +432,7 @@ public class KatakanaMenuHandler : MonoBehaviour
 
     #region challenge
 
+    /*
     public void ShowChallengeMenu() {
         menuPanel.gameObject.SetActive(false);
         challengePanel.gameObject.SetActive(true);
@@ -542,6 +543,7 @@ public class KatakanaMenuHandler : MonoBehaviour
         }
         Submit();
     }
+    */
 
     #endregion
 

@@ -3,8 +3,8 @@
 /// Implemented functions:
 ///     -> user practices by seeing hiragana symbols
 ///     -> user practices by seeing random hiragana symbols
-///     -> user practices by seeing romanji for hiragana
-///     -> user practices by seeing random romanji for hiragana symbols
+///     -> user practices by seeing romaji for hiragana
+///     -> user practices by seeing random romaji for hiragana symbols
 ///     -> the user can challenge themselves with a timer to correctly 
 ///     guess random hiragana symbols and receive a score
 ///     -> the user can go back to the main menu
@@ -23,7 +23,6 @@
 
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Linq;
@@ -34,6 +33,10 @@ public class HiraganaMenuHandler : MonoBehaviour
     [SerializeField] private GameObject hiraganaPanel;
     [SerializeField] private GameObject romajiPanel;
     [SerializeField] private GameObject challengePanel;
+    [SerializeField] private GameObject NextHiraganaButton;
+    [SerializeField] private GameObject NextRandomHiraganaButton;
+    [SerializeField] private GameObject NextRomajiButton;
+    [SerializeField] private GameObject NextRandomRomajiButton;
     [SerializeField] private TMP_Text romajiText;
     [SerializeField] private TMP_Text showHiraganaText;
     [SerializeField] private TMP_Text showHiraganaSecondaryText;
@@ -73,6 +76,8 @@ public class HiraganaMenuHandler : MonoBehaviour
     {
         menuPanel.gameObject.SetActive(false);
         romajiPanel.gameObject.SetActive(true);
+        NextRomajiButton.SetActive(true);
+        NextRandomRomajiButton.SetActive(false);
         bookmark = -1;
         NextRomaji();
     }
@@ -82,6 +87,8 @@ public class HiraganaMenuHandler : MonoBehaviour
     {
         menuPanel.gameObject.SetActive(false);
         romajiPanel.gameObject.SetActive(true);
+        NextRomajiButton.SetActive(false);
+        NextRandomRomajiButton.SetActive(true);
         NextRandomRomaji();
     }
 
@@ -90,6 +97,8 @@ public class HiraganaMenuHandler : MonoBehaviour
     {
         menuPanel.gameObject.SetActive(false);
         hiraganaPanel.gameObject.SetActive(true);
+        NextHiraganaButton.SetActive(true);
+        NextRandomHiraganaButton.SetActive(false);
         bookmark = -1;
         NextHiragana();
     }
@@ -99,9 +108,12 @@ public class HiraganaMenuHandler : MonoBehaviour
     {
         menuPanel.gameObject.SetActive(false);
         hiraganaPanel.gameObject.SetActive(true);
+        NextHiraganaButton.SetActive(false);
+        NextRandomHiraganaButton.SetActive(true);
         NextRandomHiragana();
     }
 
+    // displays the next romaji in the sequence
     public void NextRomaji() 
     {
         SoundManager.instance.Play("Bloop 1");
@@ -115,6 +127,7 @@ public class HiraganaMenuHandler : MonoBehaviour
         romajiText.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Value;
     }
 
+    // displays the next random romaji in the sequence
     public void NextRandomRomaji() 
     {
         SoundManager.instance.Play("Bloop 1");
@@ -124,6 +137,7 @@ public class HiraganaMenuHandler : MonoBehaviour
         romajiText.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Value;
     }
 
+    // displays the next hiragana in the sequence
     public void NextHiragana() 
     {
         SoundManager.instance.Play("Bloop 1");
@@ -136,12 +150,13 @@ public class HiraganaMenuHandler : MonoBehaviour
         hiraganaText.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Key;
     }
 
+    // displays the next random hiragana in the sequence
     public void NextRandomHiragana() 
     {
         SoundManager.instance.Play("Bloop 1");
         showRomajiText.text = "";
         bookmark = rand.Next(0, JapaneseDictionaries.HiraganaToEnglish.Count);
-        romajiText.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Key;
+        hiraganaText.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Key;
     }
 
     // Method to show the Hiragana of the associated romaji being pointed to by the bookmark
@@ -195,9 +210,12 @@ public class HiraganaMenuHandler : MonoBehaviour
         challengeHiragana.text = JapaneseDictionaries.HiraganaToEnglish.ElementAt(bookmark).Key;
     }
 
-    /// <summary>
-    /// yeah
-    /// </summary>
+    // takes the string the user input and lightly sanitizes it, then compares
+    // the result to the value at the bookmark in the dictionary. If it is correct,
+    // the challenge continues, a new hiragana character is displayed, the timer is
+    // reset, and the score is added to. If the answer was incorrect, the mistake 
+    // is recorded by the SaveSystem and it is then determined if the current score
+    // is a new highscore or not.
     public void Submit() {
         string input = answer.text;
         input = input.Trim(' ', '*', '!', '@', '#', '$', '%', '^', '&');
@@ -218,6 +236,8 @@ public class HiraganaMenuHandler : MonoBehaviour
             StopAllCoroutines();
             answer.gameObject.SetActive(false);
             challengeHiragana.text = "";
+            // update the value for the missed hiragana
+            SaveSystem.UpdateHiraganaStats(bookmark);
 
             // if a new highscore was achieved, UpdateHiraganaHighscore will return true
             if (SaveSystem.UpdateHiraganaHighscore(score)) 

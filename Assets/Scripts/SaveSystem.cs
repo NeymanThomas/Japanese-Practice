@@ -1,16 +1,9 @@
 ﻿/// <summary>
-/// The static SaveSystem Class implements functions that help store simple
-/// data sets that are tracked by the application. These include
-///     -> High scores for both Hiragana and Katakana Challenges
-///     -> All tallied Hiragana mistakes
-///     -> All Tallied Katakana mistakes
-/// The files of data are stored as .tommy files in Unity's persistent
-/// data path. Because the data being saved is very simple, a binary
-/// serializer is used.
+/// implements functions that help store data classes used by the application.
+/// The data is stored as json files to make for easy reading and writing. 
 /// </summary>
 
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System;
 
@@ -18,6 +11,9 @@ public static class SaveSystem
 {
     // the file path where the stats are saved
     private static string statsPath = Application.persistentDataPath + "/stats.json";
+    // the file path where User Preferences are saved
+    private static string prefsPath = Application.persistentDataPath + "/userPrefs.json";
+
 
     // This function creates a new StatisticalData object and writes it to the
     // filepath. This will be called when no stats file is found.
@@ -32,6 +28,33 @@ public static class SaveSystem
     }
 
 
+    public static void CreatePrefsFile() 
+    {
+        // Create a brand new UserPreferences object
+        UserPreferences prefs = new UserPreferences();
+        // convert the prefs string into Json string
+        string json = JsonUtility.ToJson(prefs);
+        // Write the json string into the file
+        File.WriteAllText(prefsPath, json);
+    }
+
+
+    public static bool DoStatsExist() 
+    {
+        if (File.Exists(statsPath))
+            return true;
+        return false;
+    }
+
+
+    public static bool DoPrefsExist() 
+    {
+        if (File.Exists(prefsPath))
+            return true;
+        return false;
+    }
+
+
     public static void UpdateHiraganaStats(int element) 
     {
         if (!File.Exists(statsPath)) 
@@ -39,8 +62,10 @@ public static class SaveSystem
             CreateStatsFile();
         }
         // increment mistake by 1
+        StatisticalData loadedstats = LoadStats();
+        loadedstats.hiraganaMistakes[element] += 1;
         // convert the loaded stats string back into Json string
-        string json = JsonUtility.ToJson(LoadStats().hiraganaMistakes[element]++);
+        string json = JsonUtility.ToJson(loadedstats);
         // Write the json string back into the file
         File.WriteAllText(statsPath, json);
     }
@@ -52,16 +77,47 @@ public static class SaveSystem
         {
             CreateStatsFile();
         }
-        // read the file in as a string from the path
-        string stats = File.ReadAllText(statsPath);
-        // convert the string into StatisticalData from json
-        StatisticalData loadedStats = JsonUtility.FromJson<StatisticalData>(stats);
         // increment mistake by 1
-        loadedStats.katakanaMistakes[element]++;
+        StatisticalData loadedStats = LoadStats();
+        loadedStats.katakanaMistakes[element] += 1;
         // convert the loaded stats string back into Json string
         string json = JsonUtility.ToJson(loadedStats);
         // Write the json string back into the file
         File.WriteAllText(statsPath, json);
+    }
+
+
+    public static void UpdateUserPrefs(float v, int q, bool full) 
+    {
+        if (!File.Exists(prefsPath)) 
+        {
+            CreatePrefsFile();
+        }
+        UserPreferences prefs = LoadPrefs();
+        prefs.volume = v;
+        prefs.quality = q;
+        prefs.isFullscreen = full;
+
+        // convert the loaded prefs string back into Json string
+        string json = JsonUtility.ToJson(prefs);
+        // Write the json string back into the file
+        File.WriteAllText(prefsPath, json);
+    }
+
+
+    public static void UpdateUserResolution(int index) 
+    {
+        if (!File.Exists(prefsPath)) 
+        {
+            CreatePrefsFile();
+        }
+        UserPreferences prefs = LoadPrefs();
+        prefs.resolutionIndex = index;
+
+        // convert the loaded prefs string back into Json string
+        string json = JsonUtility.ToJson(prefs);
+        // Write the json string back into the file
+        File.WriteAllText(prefsPath, json);
     }
 
 
@@ -147,41 +203,23 @@ public static class SaveSystem
     }
 
 
-
-
-
-
-
-
-
-
+    public static UserPreferences LoadPrefs() 
+    {
+        // read the file in as a string from the path
+        string prefs = File.ReadAllText(prefsPath);
+        // convert the string into UserPreferences from json
+        UserPreferences loadedPrefs = JsonUtility.FromJson<UserPreferences>(prefs);
+        return loadedPrefs;
+    }
 
 
     public static void DeleteStats() {
-        string path = Application.persistentDataPath + "/stats.tommy";
         try {
-            File.Delete(path);
+            File.Delete(statsPath);
+            CreateStatsFile();
         }
         catch (Exception ex) {
             Debug.LogException(ex);
         }
     }
-
-    public static void DeleteScores() {
-        string path = Application.persistentDataPath + "/h_score.tommy";
-        try {
-            File.Delete(path);
-        }
-        catch (Exception ex) {
-            Debug.LogException(ex);
-        }
-        path = Application.persistentDataPath + "/k_score.tommy";
-        try {
-            File.Delete(path);
-        }
-        catch (Exception ex) {
-            Debug.LogException(ex);
-        }
-    }
-    
 }

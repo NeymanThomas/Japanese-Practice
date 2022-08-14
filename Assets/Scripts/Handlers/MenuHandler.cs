@@ -4,9 +4,10 @@
 /// to different parts of the application. functions implemented include:
 ///     -> Directing user to Hiragana Scene
 ///     -> Directing user to Katakana Scene
+///     -> Dictionary Functionality
 ///     -> Allowing user to see their stats 
 ///     -> Allowing user to Delete their stats
-///     -> Allowing user to Delete their scores
+///     -> Adjust Settings
 ///     -> Quit button to exit the application
 /// </summary>
 
@@ -19,7 +20,6 @@ using System.Collections.Generic;
 public class MenuHandler : MonoBehaviour
 {
     [SerializeField] private Button btnDeleteStats;
-    [SerializeField] private Button btnDeleteScores;
     [SerializeField] private GameObject pnlSettings;
     [SerializeField] private GameObject pnlDictionary;
     [SerializeField] private TMP_Text txtVolumeNumber;
@@ -31,23 +31,23 @@ public class MenuHandler : MonoBehaviour
     private Resolution[] resolutions;
     private bool statsFlag, scoresFlag;
 
+    void Awake() {
+        // Load in User Preferences
+        if (SaveSystem.DoPrefsExist()) {
+            UserPreferences prefs = SaveSystem.LoadPrefs();
+            AdjustVolume(prefs.volume);
+            AdjustGraphics(prefs.quality);
+            AdjustFullscreen(prefs.isFullscreen);
+            resolutions = Screen.resolutions;
+            AdjustResolution(prefs.resolutionIndex);
+        }  
+    }
+
     void Start() {
-        initSettings();
         pnlSettings.SetActive(false);
         pnlDictionary.SetActive(false);
     }
 
-    // Function that will handle loading in all of the user data and settings that need to be taken care of.
-    private void initSettings() {
-        // load user settings
-        // Volume setting, graphic setting, resolution, fullscreen
-        // check to see if save files exist
-    }
-
-    public void TestSaveSystem() 
-    {
-        SaveSystem.UpdateHiraganaStats(23);
-    }
 
     public void LoadHiragana() {
         SoundManager.instance.Play("Bloop 1");
@@ -168,14 +168,10 @@ public class MenuHandler : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
-    public void SettingsBack() {
-        SoundManager.instance.Play("Bloop 1");
-        pnlSettings.SetActive(false);
-    }
-
     public void AdjustResolution(int resolutionIndex) {
         Resolution res = resolutions[resolutionIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        SaveSystem.UpdateUserResolution(resolutionIndex);
     }
 
     public void DeleteStats() {
@@ -192,18 +188,15 @@ public class MenuHandler : MonoBehaviour
         }
     }
 
-    public void DeleteScores() {
-        SoundManager.instance.Play("Bloop 3");
-        if (scoresFlag == false) {
-            btnDeleteScores.image.color = new Color32(255, 0, 0, 255);
-            btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "ARE YOU SURE?";
-            scoresFlag = true;
-        }
-        else {
-            SaveSystem.DeleteScores();
-            btnDeleteScores.image.color = new Color32(255, 255, 255, 255);
-            btnDeleteScores.GetComponentInChildren<TMP_Text>().text = "Scores Deleted";
-        }
+    public void SettingsBack() {
+        SoundManager.instance.Play("Bloop 1");
+
+        float volume = SoundManager.instance.sounds[0].source.volume;
+        int quality = QualitySettings.GetQualityLevel();
+        bool fullscreen = Screen.fullScreen;
+        SaveSystem.UpdateUserPrefs(volume, quality, fullscreen);
+
+        pnlSettings.SetActive(false);
     }
 
     #endregion

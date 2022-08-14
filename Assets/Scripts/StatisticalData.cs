@@ -1,15 +1,12 @@
 ﻿/// <summary>
-/// A simple class that is used to hold the raw data for the application. All mistakes
-/// are saved as an integer for the associated values in the class. Upon class creation
-/// all values are set to 0. The add_H_Stat and add_K_Stat functions then take a specific
-/// input and increment the associated value by 1. The class is then re-serialized by the 
-/// SaveSystem class.
+/// Stores the statistical data for the application. This includes the list of mistakes
+/// made when determining hiragana and katakana in challenge modes, highscores, and
+/// time spent practicing. The class itself is used to be stored as a json file for
+/// easy storage of data.
 /// </summary>
-
 
 public class StatisticalData
 {
-
     public int[] hiraganaMistakes = new int[JapaneseDictionaries.HiraganaToEnglish.Count];
     public int[] katakanaMistakes = new int[JapaneseDictionaries.KatakanaToEnglish.Count];
     public float hiraganaHighscore;

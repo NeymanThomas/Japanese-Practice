@@ -121,6 +121,22 @@ public static class SaveSystem
     }
 
 
+    public static void UpdateTimePassed(int time) 
+    {
+        if (!File.Exists(statsPath)) 
+        {
+            CreateStatsFile();
+        }
+        // compound the time passed
+        StatisticalData loadedStats = LoadStats();
+        loadedStats.secondsSpentPracticing += time;
+        // convert the loaded stats string back into Json string
+        string json = JsonUtility.ToJson(loadedStats);
+        // Write the json string back into the file
+        File.WriteAllText(statsPath, json);
+    }
+
+
     public static bool UpdateHiraganaHighscore(float score) 
     {
         if (!File.Exists(statsPath)) 

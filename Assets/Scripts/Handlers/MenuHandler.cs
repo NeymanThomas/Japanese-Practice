@@ -31,7 +31,10 @@ public class MenuHandler : MonoBehaviour
     private Resolution[] resolutions;
     private bool statsFlag, scoresFlag;
 
-    void Awake() {
+
+    void Start() {
+        pnlSettings.SetActive(false);
+        pnlDictionary.SetActive(false);
         // Load in User Preferences
         if (SaveSystem.DoPrefsExist()) {
             UserPreferences prefs = SaveSystem.LoadPrefs();
@@ -40,12 +43,7 @@ public class MenuHandler : MonoBehaviour
             AdjustFullscreen(prefs.isFullscreen);
             resolutions = Screen.resolutions;
             AdjustResolution(prefs.resolutionIndex);
-        }  
-    }
-
-    void Start() {
-        pnlSettings.SetActive(false);
-        pnlDictionary.SetActive(false);
+        } 
     }
 
 
@@ -202,6 +200,7 @@ public class MenuHandler : MonoBehaviour
     #endregion
 
     public void Quit() {
+        Timer.instance.AddTimePassed();
         Application.Quit();
     }
 }

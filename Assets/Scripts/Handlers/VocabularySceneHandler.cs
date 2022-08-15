@@ -19,6 +19,7 @@ public class VocabularySceneHandler : MonoBehaviour
 
     private void Start()
     {
+        Timer.instance.StartTimer();
         rand = new System.Random();
         QuestionText.text = "";
         AnswerText.text = "";
@@ -182,6 +183,7 @@ public class VocabularySceneHandler : MonoBehaviour
 
     public void BackToTopicsMenu() {
         SoundManager.instance.Play("Bloop 1");
+        Timer.instance.AddTimePassed();
         SceneManager.LoadScene("TopicsMenu");
     }
 

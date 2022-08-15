@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class StatsMenuHandler : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class StatsMenuHandler : MonoBehaviour
     [SerializeField] 
     private TMP_Text k_scoreBlock_1, k_scoreBlock_2, k_scoreBlock_3, k_scoreBlock_4, k_scoreBlock_5, k_scoreBlock_6, k_scoreBlock_7;
     [SerializeField]
-    private GameObject hiraganaPanel, katakanaPanel;
+    private GameObject hiraganaPanel, katakanaPanel, statsPanel;
+    [SerializeField]
+    private TMP_Text txtTimeSpent, txtHiraganaHS, txtKatakanaHS;
     StatisticalData stats;
 
 
@@ -27,6 +30,7 @@ public class StatsMenuHandler : MonoBehaviour
 
         hiraganaPanel.gameObject.SetActive(true);
         katakanaPanel.gameObject.SetActive(false);
+        statsPanel.gameObject.SetActive(false);
         ShowHiraganaScores();
     }
 
@@ -112,6 +116,14 @@ public class StatsMenuHandler : MonoBehaviour
         }
     }
 
+    public void ShowStats() 
+    {
+        TimeSpan t = TimeSpan.FromSeconds(stats.secondsSpentPracticing);
+        txtTimeSpent.text = t.ToString(@"dd\:hh\:mm\:ss");
+        txtHiraganaHS.text = stats.hiraganaHighscore.ToString("0.##");
+        txtKatakanaHS.text = stats.katakanaHighscore.ToString("0.##");
+    }
+
     public void Next() {
         SoundManager.instance.Play("Bloop 1");
         if (hiraganaPanel.gameObject.activeSelf == true) {
@@ -120,8 +132,13 @@ public class StatsMenuHandler : MonoBehaviour
             ShowKatakanaScores();
         }
         else if (katakanaPanel.gameObject.activeSelf == true) {
-            hiraganaPanel.gameObject.SetActive(true);
             katakanaPanel.gameObject.SetActive(false);
+            statsPanel.gameObject.SetActive(true);
+            ShowStats();
+        }
+        else if (statsPanel.gameObject.activeSelf == true) {
+            statsPanel.gameObject.SetActive(false);
+            hiraganaPanel.gameObject.SetActive(true);
             ShowHiraganaScores();
         }
     }

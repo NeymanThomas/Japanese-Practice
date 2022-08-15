@@ -67,6 +67,7 @@ public class HiraganaMenuHandler : MonoBehaviour
     private void Start() {
         rand = new System.Random();
         bookmark = 0;
+        Timer.instance.StartTimer();
     }
 
     #region Button Methods
@@ -284,6 +285,7 @@ public class HiraganaMenuHandler : MonoBehaviour
 
     public void BackToMain() {
         SoundManager.instance.Play("Bloop 1");
+        Timer.instance.AddTimePassed();
         SceneManager.LoadScene("MainMenu");
     }
 }

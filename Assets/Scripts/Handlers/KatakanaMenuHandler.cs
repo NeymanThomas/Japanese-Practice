@@ -71,6 +71,7 @@ public class KatakanaMenuHandler : MonoBehaviour
         CreateList();
         random = new System.Random();
         bookmark = 0;
+        Timer.instance.StartTimer();
     }
 
     private void CreateList() {
@@ -557,6 +558,7 @@ public class KatakanaMenuHandler : MonoBehaviour
 
     public void BackToMain() {
         SoundManager.instance.Play("Bloop 1");
+        Timer.instance.AddTimePassed();
         SceneManager.LoadScene("MainMenu");
     }
 }

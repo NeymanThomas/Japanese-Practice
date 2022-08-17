@@ -88,7 +88,7 @@ public class MenuHandler : MonoBehaviour
         string result = JapaneseDictionaries.DictionaryLookup(dictionaryInput.text);
         if (result != "Error") 
         {
-            SoundManager.instance.Play("Bloop 1");
+            SoundManager.instance.Play("Bloop 5");
             txtResult.fontSize = 240;
             if (result.Length > 6) 
             {

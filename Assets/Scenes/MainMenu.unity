@@ -3419,6 +3419,11 @@ MonoBehaviour:
     volume: 1
     loop: 0
     source: {fileID: 0}
+  - name: Bloop 5
+    clip: {fileID: 8300000, guid: 1f030e58b78241c4ba3c99b42e0b66e1, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &806972455
 Transform:
   m_ObjectHideFlags: 0

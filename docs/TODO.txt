@@ -1,8 +1,5 @@
 TODO
 =============================================
-1 Katakana mistakes not showing up properly (Are they in a different order than hiragana?)
-- Add a different sound for searching a word in the dictionary
-2 Make sure the same word can't appear in a row when practicing
 - Update the font for all text assets
 IMPORTANT
 - On releases, instead of having the whole folder there, upload the zip so it is easier to access for people without github

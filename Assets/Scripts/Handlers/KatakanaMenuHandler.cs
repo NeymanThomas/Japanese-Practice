@@ -48,6 +48,7 @@ public class KatakanaMenuHandler : MonoBehaviour
     [SerializeField] private TMP_Text challengeKatakana;
     [SerializeField] private TMP_Text endText;
     [SerializeField] private GameObject retryButton;
+    [SerializeField] private GameObject quitButton;
     [SerializeField] private TMP_Text timeLeft;
 
     private int bookmark; // The bookmark refers to the current position in the dictionary
@@ -134,7 +135,12 @@ public class KatakanaMenuHandler : MonoBehaviour
         SoundManager.instance.Play("Bloop 1");
         showKatakanaText.text = "";
         showKatakanaSecondaryText.text = "";
-        bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        // this loop is to ensure that characters are not repeated
+        int oldBookmark = bookmark;
+        while (oldBookmark == bookmark) 
+        {
+            bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        }
         romajiText.text = JapaneseDictionaries.KatakanaToEnglish.ElementAt(bookmark).Value;
     }
 
@@ -156,7 +162,12 @@ public class KatakanaMenuHandler : MonoBehaviour
     {
         SoundManager.instance.Play("Bloop 1");
         showRomajiText.text = "";
-        bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        // this loop is to ensure that characters are not repeated
+        int oldBookmark = bookmark;
+        while (oldBookmark == bookmark) 
+        {
+            bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        }
         katakanaText.text = JapaneseDictionaries.KatakanaToEnglish.ElementAt(bookmark).Key;
     }
 
@@ -193,6 +204,7 @@ public class KatakanaMenuHandler : MonoBehaviour
         challengePanel.gameObject.SetActive(true);
         answer.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
 
         highScore.text = SaveSystem.LoadKatakanaScore().ToString("0.##");
         endText.text = "";
@@ -207,7 +219,12 @@ public class KatakanaMenuHandler : MonoBehaviour
     private void NextChallengeKatakana() 
     {
         challengeKatakana.text = "";
-        bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        // this loop is to ensure that characters are not repeated
+        int oldBookmark = bookmark;
+        while (oldBookmark == bookmark) 
+        {
+            bookmark = rand.Next(0, JapaneseDictionaries.KatakanaToEnglish.Count);
+        }
         challengeKatakana.text = JapaneseDictionaries.KatakanaToEnglish.ElementAt(bookmark).Key;
     }
 
@@ -255,6 +272,7 @@ public class KatakanaMenuHandler : MonoBehaviour
                 "\nYour Score: " + score.ToString("0.##");
             }
             retryButton.gameObject.SetActive(true);
+            quitButton.gameObject.SetActive(true);
         }
     }
 

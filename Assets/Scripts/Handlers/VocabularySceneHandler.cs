@@ -150,7 +150,12 @@ public class VocabularySceneHandler : MonoBehaviour
         SoundManager.instance.Play("Bloop 1");
         AnswerText.text = "";
         PronunciationText.text = "";
-        currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
+        // this loop is to ensure that questions are not repeated
+        int oldIndex = currentIndex;
+        while (oldIndex == currentIndex) 
+        {
+            currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
+        }
         generateJapaneseString(QuestionText);
     }
 
@@ -164,7 +169,12 @@ public class VocabularySceneHandler : MonoBehaviour
         SoundManager.instance.Play("Bloop 1");
         QuestionText.text = "";
         PronunciationText.text = "";
-        currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
+        // this loop is to ensure that questions are not repeated
+        int oldIndex = currentIndex;
+        while (oldIndex == currentIndex) 
+        {
+            currentIndex = rand.Next(chapterIndexStart, chapterIndexEnd);
+        }
         generateEnglishString(AnswerText);
     }
 

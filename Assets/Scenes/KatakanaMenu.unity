@@ -3032,6 +3032,7 @@ MonoBehaviour:
   challengeKatakana: {fileID: 688302878}
   endText: {fileID: 912672359}
   retryButton: {fileID: 1297992102}
+  quitButton: {fileID: 1887583700}
   timeLeft: {fileID: 896980259}
 --- !u!4 &1012884826
 Transform:
